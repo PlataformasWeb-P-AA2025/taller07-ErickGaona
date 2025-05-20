@@ -37,7 +37,7 @@ session.commit()
 with open('datos_jugadores.txt', newline='', encoding='utf-8') as csvfile:
     reader = csv.DictReader(csvfile, delimiter=';')
     for row in reader:
-        club =  session.query(Club).filter_by(nombre="LDU").one()
+        club = session.query(Club).filter_by(nombre=row['club']).one()
         jugador = Jugador(
             nombre=row['nombre'],
             dorsal=int(row['dorsal']),
