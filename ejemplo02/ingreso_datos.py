@@ -17,7 +17,7 @@ Session = sessionmaker(bind=engine)
 session = Session()
 
 # Cargar datos de Jugador
-with open('data/datos_jugadores.txt', newline='', encoding='utf-8') as csvfile:
+with open('datos_clubs.txt', newline='', encoding='utf-8') as csvfile:
     reader = csv.DictReader(csvfile, delimiter='|')
     for row in reader:
         club = session.query(Club).filter_by(nombre=row['nombre_club']).one()
@@ -33,6 +33,20 @@ session.commit()
 print(f"📦 Datos cargados desde el CSV: {len(lista_datos)} registros")
 
 
+# Cargar datos de Jugador
+with open('datos_jugadores.txt', newline='', encoding='utf-8') as csvfile:
+    reader = csv.DictReader(csvfile, delimiter='|')
+    for row in reader:
+        club = session.query(Club).filter_by(nombre=row['nombre_club']).one()
+        jugador = Jugador(
+            nombre=row['nombre'],
+            dorsal=int(row['dorsal']),
+            posicion=row['posicion'],
+            club=club
+        )
+        session.add(jugador)
+
+session.commit()
 
 
 
